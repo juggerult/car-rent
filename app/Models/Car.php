@@ -33,4 +33,7 @@ class Car extends Model
     public function images(){
         return $this->hasMany(CarImage::class);
     }
+    public function logo(){
+        return $this->hasOne(LogoCar::class);
+    }
 }
