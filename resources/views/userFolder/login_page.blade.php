@@ -9,11 +9,16 @@
 </head>
 <body>
     <div class="container">
-        <form class="form">
-            <h2>Авторизация</h2>
-            @error('message')
-            <div class="alert-danger">{{ $message }} </div>
-            @enderror
+        <form class="form" action="{{route('api.user.login')}}" method="POST">
+            @csrf
+            <h2>Авторизация</h2>    
+            @if($errors->any())
+        <div class="alert-danger" style="color: red;">
+            @foreach ($errors->all() as $error)
+                {{ $error }}<br>
+            @endforeach
+        </div>
+    @endif
             <div class="form-group">
                 <label for="email">Почта</label>
                 <input type="email" id="email" name="email" required>
@@ -23,7 +28,7 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <button type="submit">Войти</button><br><br>
-            <label>Нет еще аккаунта ? - <a href="{{route('registration')}}">Регистрируй</a></label>
+            <label>Нет еще аккаунта ? - <a href="{{route('user.registration')}}">Регистрируй</a></label>
         </form>
     </div>
 </body>
