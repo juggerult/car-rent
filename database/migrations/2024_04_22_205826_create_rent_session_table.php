@@ -11,22 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cars', function (Blueprint $table) {
+        Schema::create('rent_session', function (Blueprint $table) {
             $table->id();
 
-            $table->string('description');
-
-            $table->string('type');
-            $table->string('mark');
-            $table->integer('year');
-            $table->string('gearbox');
-            $table->string('engine');
-            $table->string('color');
-
+            $table->dateTime('date_start');
+            $table->dateTime('date_end'); 
             $table->integer('price');
-            $table->boolean('isActive')->default(true);
-            
+            $table->foreignId('car_id')->references('id')->on('cars')->cascadeOnDelete();
             $table->foreignId('tenant_id')->references('id')->on('users')->cascadeOnDelete()->nullable();
+            
+            $table->string('payment_type');
+            $table->boolean('isPledgeReturned')->default(false);
+            
+            $table->boolean('isActive')->default(true);
             $table->timestamps();
         });
     }
@@ -36,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cars');
+        Schema::dropIfExists('rent_session');
     }
 };

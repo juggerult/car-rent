@@ -74,7 +74,7 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#">Главная</a></li>
-                <li><a href="#">Компании</a></li>
+                <li><a href="#">О нас</a></li>
                 @if(Auth::check())
                     <li><a href="#">{{Auth::user()->first_name}}</a></li>
                 @else

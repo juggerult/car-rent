@@ -10,7 +10,6 @@ class Car extends Model
     use HasFactory;
     protected $table = "cars";
     protected $fillable = [
-        'name',
         'description',
         'type',
         'mark',
@@ -31,5 +30,8 @@ class Car extends Model
     }
     public function logo(){
         return $this->hasOne(LogoCar::class);
+    }
+    public function rentSession(){
+        return $this->hasOne(RentSession::class);
     }
 }
