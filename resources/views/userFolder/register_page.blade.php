@@ -5,6 +5,8 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <meta http-equiv="X-UA-Compatible" content="ie=edge">
      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
      <link href="style.css" rel="stylesheet">
      <title>Registration User</title>
 </head>
@@ -12,7 +14,7 @@
      <div class="container">
          <form action="{{ route('api.user.registration') }}" class="form" method="POST" id="registrationForm">
              @csrf
-             <h2>Регистрация</h2>
+             <h2 style="font-family: 'Montserrat', serif;font-weight:bold;">Регистрация</h2>
              @error('error')
              <div class="alert-danger" style="color: red;">{{ $message }} </div>
              @enderror

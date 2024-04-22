@@ -24,9 +24,9 @@ Route::get('/private', function () {
 
 
 
-Route::get('/login', [AuthController::class, 'indexLogin'])->name('user.login');
-Route::get('/registration', [AuthController::class, 'indexRegister'])->name('user.registration');
 
-Route::post('/registration', [AuthController::class, 'registration'])->name('api.user.registration');
-Route::post('/login', [AuthController::class,'login'])->name('api.user.login');
+    Route::get('/login', [AuthController::class, 'indexLogin'])->name('user.login');
+    Route::get('/registration', [AuthController::class, 'indexRegister'])->name('user.registration');
 
+    Route::post('/registration', [AuthController::class, 'registration'])->name('api.user.registration');
+    Route::post('/login', [AuthController::class,'login'])->name('api.user.login');

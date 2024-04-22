@@ -15,12 +15,12 @@ class AuthController extends BaseController
         if(Auth::check()) {
             return redirect(route('user.private'));
         }
-        return view('userFolder.login_page');
+        return view('templates.user_header') .view('userFolder.login_page');
     }
 
     public function indexRegister()
     {
-        return view('userFolder.register_page');
+        return view('templates.user_header') .view('userFolder.register_page');
     }
 
     private function formRequestData(Request $request)
