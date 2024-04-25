@@ -41,9 +41,9 @@ class AuthController extends BaseController
     private function checkAvailable($data)
     {
         if (User::where('email', $data['email'])->first()) {
-            return redirect()->route('user.registration')->withErrors(['error' => 'Пользователь с такой почтой уже зарегистрирован']);
+            return redirect()->route('registration')->withErrors(['error' => 'Пользователь с такой почтой уже зарегистрирован']);
         } elseif (User::where('phone_number', $data['phone_number'])->first()) {
-            return redirect()->route('user.registration')->withErrors(['error' => 'Пользователь с таким номером телефона уже зарегистрирован']);
+            return redirect()->route('registration')->withErrors(['error' => 'Пользователь с таким номером телефона уже зарегистрирован']);
         }
 
         return true;
@@ -58,13 +58,13 @@ class AuthController extends BaseController
         if ($checkResult === true) {
             try {
                 $this->servicePOST->registrationUser($data);    
-                return redirect()->route('user.registration')->withErrors(['error' => 'Пользователь успешно зарегистрирован']);
+                return redirect()->route('registration')->withErrors(['error' => 'Пользователь успешно зарегистрирован']);
             } catch (\Exception $e) {
-                return redirect()->route('user.registration')->withErrors(['error' => $e->getMessage()]);
+                return redirect()->route('registration')->withErrors(['error' => $e->getMessage()]);
             }
         }
         
-        return redirect()->route('user.registration')->withErrors(['error' => 'Что то пошло не так, попробуйте позже']);
+        return redirect()->route('.registration')->withErrors(['error' => 'Что то пошло не так, попробуйте позже']);
     }
 
     public function login(Request $request)
@@ -76,16 +76,42 @@ class AuthController extends BaseController
             
             if ($user->isActive != true) {
                 Auth::logout();
-                return redirect()->route('user.login')->withErrors(['error' => 'Пользователь заблокирован']);
+                return redirect()->route('login')->withErrors(['error' => 'Пользователь заблокирован']);
             }
     
             $request->session()->regenerate();
             $token = $user instanceof User ? $user->createToken('auth-token')->plainTextToken : null;
             
-            return redirect()->route('user.private')->with('token', $token);
+            return $this->distributionRole($token);
+        
         } else {
-            return redirect()->route('user.login')->withErrors(['error' => 'Неверные данные']);
+            return redirect()->route('login')->withErrors(['error' => 'Неверные данные']);
         }
+    }
+
+    private function distributionRole($token){
+        switch(Auth::user()->status){
+            case 'Пользователь':
+                return redirect()->route('user.private')->with('token', $token);
+            case 'Менеджер':
+                //return redirect()->route('admin.main')->with('token', $token);
+            case 'Администратор':
+               //return redirect()->route('admin.main')->with('token', $token);
+            default:
+            return redirect()->route('login')->withErrors(['error' => 'Что то пошло не так, попробуйте позже']);
+        }
+    }
+
+    public function logout(Request $request){
+        $user = Auth::user();
+        if ($user instanceof User) {
+            $user->tokens()->delete();
+        }
+
+        Auth::logout();
+        $request->session()->invalidate();
+
+        return redirect()->route('main');
     }
 
 }

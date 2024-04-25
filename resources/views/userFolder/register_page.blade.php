@@ -12,7 +12,7 @@
 </head>
 <body>
      <div class="container">
-         <form action="{{ route('api.user.registration') }}" class="form" method="POST" id="registrationForm">
+         <form action="{{ route('post.registration') }}" class="form" method="POST" id="registrationForm">
              @csrf
              <h2 style="font-family: 'Montserrat', serif;font-weight:bold;">Регистрация</h2>
              @error('error')
@@ -46,29 +46,30 @@
 
 
      <script>
-         document.getElementById('registrationForm').addEventListener('submit', function(event) {
-             var password = document.getElementById('password').value;
-             var phone = document.getElementById('phone_number').value;
-
-             if (password.length < 8) {
-                 event.preventDefault();
-                 document.getElementById('passwordError').innerText = 'Пароль должен содержать не менее 8 символов';
-             } else {
-                 document.getElementById('passwordError').innerText = '';
-             }
-
-             if (!validatePhoneNumber(phone)) {
-                 event.preventDefault();
-                 document.getElementById('phoneError').innerText = 'Некорректный номер телефона';
-             } else {
-                 document.getElementById('phoneError').innerText = '';
-             }
-         });
-
-         function validatePhoneNumber(phone) {
-             var phoneRegex = /^[+]?[(]?\d{1,4}[)]?[-\s./0-9]*$/;
-             return phoneRegex.test(phone);
-         }
-     </script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            var password = document.getElementById('password').value;
+            var phone = document.getElementById('phone_number').value;
+        
+            if (password.length < 8) {
+                event.preventDefault();
+                document.getElementById('passwordError').innerText = 'Пароль должен содержать не менее 8 символов';
+            } else {
+                document.getElementById('passwordError').innerText = '';
+            }
+        
+            if (!validatePhoneNumber(phone)) {
+                event.preventDefault();
+                document.getElementById('phoneError').innerText = 'Номер телефона должен начинаться на +380 и быть длиной 10 цифр';
+            } else {
+                document.getElementById('phoneError').innerText = '';
+            }
+        });
+        
+        function validatePhoneNumber(phone) {
+            var phoneRegex = /^\+380\d{7}$/;
+            return phoneRegex.test(phone);
+        }
+        </script>
+        
 </body>
 </html>

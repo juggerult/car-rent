@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="container">
-        <form class="form" action="{{route('api.user.login')}}" method="POST">
+        <form class="form" action="{{route('post.login')}}" method="POST">
             @csrf
             <h2 style="font-family: 'Montserrat', serif;font-weight:bold;">Авторизация</h2>    
             @if($errors->any())
@@ -30,7 +30,7 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <button type="submit">Войти</button><br><br>
-            <label style=" font-family: 'Montserrat', serif; ">Нет еще аккаунта ? - <a href="{{route('user.registration')}}">Регистрируй</a></label>
+            <label style=" font-family: 'Montserrat', serif; ">Нет еще аккаунта ? - <a href="{{route('registration')}}">Регистрируй</a></label>
         </form>
     </div>
 </body>

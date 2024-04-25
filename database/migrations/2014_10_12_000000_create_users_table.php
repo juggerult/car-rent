@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('status')->default('user');
+            $table->string('status')->default('Пользователь');
             
             $table->integer('balance')->default(0);
             $table->string('phone_number')->unique();

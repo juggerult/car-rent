@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,17 +18,33 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('home');
-Route::get('/private', function () {
-    return view('userFolder.private');
-})->name('user.private');
+})->name('main');
+
+
+
+
+Route::group([], function () { //Аунтефикация 
+    Route::get('/login', [AuthController::class, 'indexLogin'])->name('login');
+    Route::get('/registration', [AuthController::class, 'indexRegister'])->name('registration');
+
+    Route::post('/registration', [AuthController::class, 'registration'])->name('post.registration');
+    Route::post('/login', [AuthController::class,'login'])->name('post.login');
+
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+
+
+
+Route::prefix('user')->middleware(['auth'])->group(function () {
+    Route::get('/main', [UserController::class,'indexMain'])->name('user.private');
+
+});
 
 
 
 
 
-    Route::get('/login', [AuthController::class, 'indexLogin'])->name('user.login');
-    Route::get('/registration', [AuthController::class, 'indexRegister'])->name('user.registration');
-
-    Route::post('/registration', [AuthController::class, 'registration'])->name('api.user.registration');
-    Route::post('/login', [AuthController::class,'login'])->name('api.user.login');
+Route::prefix('management')->middleware(['auth'])->group(function () {
+    Route::get('/', [AdminController::class, 'index']);
+});

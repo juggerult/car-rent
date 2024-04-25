@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <title>CarRent</title>
-    <style>
+    <style scoped>
 .header {
     background-color: #ffffff;
     color: #333333;
@@ -15,19 +15,12 @@
     height: 50px;
     box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.1);
     transition: background-color 0.7s ease, transform 0.7s ease;
-    width: 70%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
-    border-radius: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
-}
-
-.header:hover {
-    transform: scale(1.04);
-    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.2);
 }
 
 .navbar {
@@ -69,14 +62,12 @@
 <body>
     <header class="header">
         <nav class="navbar">
-            <div class="logo">
-                <a href="{{route('main')}}">CarRent</a>
-            </div>
             <ul class="nav-links">
                 <li><a href="{{route('main')}}">Главная</a></li>
                 <li><a href="#">О нас</a></li>
                 @if(Auth::check())
                     <li><a href="#">{{Auth::user()->first_name}}</a></li>
+                    <li><a href="{{route('logout')}}">Выйти</a></li>
                 @else
                     <li><a href="{{route('user.private')}}">Личный кабинет</a></li>
                 @endif
