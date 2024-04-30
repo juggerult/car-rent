@@ -31,12 +31,16 @@ Route::group([], function () { //Аунтефикация
     Route::post('/login', [AuthController::class,'login'])->name('post.login');
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    
+    Route::fallback(function () {
+        return view('fallback');
+    })->name('fallback');
 });
 
 
 
 
-Route::prefix('user')->middleware(['auth'])->group(function () {
+Route::prefix('user')->middleware(['auth', 'management'])->group(function () {
     Route::get('/main', [UserController::class,'indexMain'])->name('user.private');
 
 });
@@ -47,4 +51,7 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
 
 Route::prefix('management')->middleware(['auth'])->group(function () {
     Route::get('/', [AdminController::class, 'index']);
+
+    Route::get('/users', [AdminController::class, 'usersIndex'])->name('admin.users');
+    Route::get('/managers', [AdminController::class, 'managersIndex'])->name('admin.managers');
 });

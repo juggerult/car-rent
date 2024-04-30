@@ -10,7 +10,7 @@
 <style scoped>
      body {
      margin: 0;
-}
+    }
 
 .vertical-header {
     background-color: #ffffff;
@@ -22,8 +22,13 @@
     top: 0;
     bottom: 0;
     left: 0;
-    width: 200px; 
-    overflow-y: auto;
+    width: 300px; 
+    transition: background-color 0.7s ease, transform 0.7s ease;
+}
+
+.vertical-header:hover {
+    transform: scale(1.04);
+    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.2);
 }
 
 .vertical-header h1 {
@@ -34,6 +39,11 @@
     font-weight:bold;
 }
 
+.vertical-header .arrow-symbol {
+    font-size: 18px;
+    vertical-align: middle;
+}
+
 .vertical-header nav ul {
     list-style-type: none;
     padding: 0;
@@ -42,13 +52,15 @@
 
 .vertical-header nav ul li {
     margin-bottom: 10px;
+    margin-top: 35px;
 }
 
 .vertical-header nav ul li a {
-    color: #fff;
     text-decoration: none;
-    color: #dbd2d2;
-    font-size: 18px;
+    font-size: 1.6rem;
+    font-family: 'Montserrat', serif;
+    transition: color 0.3s ease;
+    color: #333333;
 }
 
 .vertical-header nav ul li a:hover {
@@ -60,6 +72,10 @@
     padding: 20px;
 }
 
+.sub-menu {
+    display: none;
+    margin: 0;
+}
 </style>
 </head>
 <body>
@@ -69,15 +85,53 @@
     <nav>
         <ul>
             <li><a href="#">Главная</a></li>
-            <li><a href="#">Автопарк</a></li>
-            <li><a href="#">Пользователи</a></li>
-            <li><a href="#">Выход</a></li>
+            <li>
+                <a href="#" id="autopark-btn">Автопарк <span id="autopark-arrow-symbol" class="arrow-symbol">&#8595;</span></a>
+                <ul class="sub-menu" id="autopark-submenu">
+                    <li><a href="#" style="font-size: 16px; color: rgb(117, 111, 111);">Добавить авто</a></li>
+                    <li><a href="#" style="font-size: 16px; color: rgb(117, 111, 111);">Обзор</a></li>
+                </ul>   
+            </li>
+            <li>
+                <a href="#" id="users-btn">Пользователи <span id="users-arrow-symbol" class="arrow-symbol">&#8595;</span></a>
+                <ul class="sub-menu" id="users-submenu">
+                    <li><a href="#" style="font-size: 16px; color: rgb(117, 111, 111);">Клиенты</a></li>
+                    <li><a href="#" style="font-size: 16px; color: rgb(117, 111, 111);">Менеджеры</a></li>
+                </ul>
+            </li>
+            <li><a href="{{route('logout')}}">Выход</a></li>
         </ul>
     </nav>
 </header>
 
-<div class="content">    
-</div>
+<script>
+    const autoparkBtn = document.getElementById('autopark-btn');
+    const autoparkSubmenu = document.getElementById('autopark-submenu');
+    const autoparkArrowSymbol = document.getElementById('autopark-arrow-symbol');
+    const usersBtn = document.getElementById('users-btn');
+    const usersSubmenu = document.getElementById('users-submenu');
+    const usersArrowSymbol = document.getElementById('users-arrow-symbol');
+
+    autoparkBtn.addEventListener('click', function() {
+        if (autoparkSubmenu.style.display === 'block') {
+            autoparkSubmenu.style.display = 'none';
+            autoparkArrowSymbol.innerHTML = '&#8595;'; 
+        } else {
+            autoparkSubmenu.style.display = 'block';
+            autoparkArrowSymbol.innerHTML = '&#8593;';
+        }
+    });
+
+    usersBtn.addEventListener('click', function() {
+        if (usersSubmenu.style.display === 'block') {
+            usersSubmenu.style.display = 'none';
+            usersArrowSymbol.innerHTML = '&#8595;';
+        } else {
+            usersSubmenu.style.display = 'block';
+            usersArrowSymbol.innerHTML = '&#8593;';
+        }
+    });
+</script>
 
 </body>
 </html>
