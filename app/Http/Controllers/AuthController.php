@@ -94,9 +94,9 @@ class AuthController extends BaseController
             case 'Пользователь':
                 return redirect()->route('user.private')->with('token', $token);
             case 'Менеджер':
-                //return redirect()->route('admin.main')->with('token', $token);
+                return redirect()->route('admin.private')->with('token', $token);
             case 'Администратор':
-               //return redirect()->route('admin.main')->with('token', $token);
+               return redirect()->route('admin.private')->with('token', $token);
             default:
             return redirect()->route('login')->withErrors(['error' => 'Что то пошло не так, попробуйте позже']);
         }

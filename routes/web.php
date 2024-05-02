@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('main');
 
+Route::fallback(function () {
+    return view('fallback');
+})->name('fallback');
 
 
 
@@ -31,16 +35,12 @@ Route::group([], function () { //Аунтефикация
     Route::post('/login', [AuthController::class,'login'])->name('post.login');
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-    
-    Route::fallback(function () {
-        return view('fallback');
-    })->name('fallback');
 });
 
 
 
 
-Route::prefix('user')->middleware(['auth', 'management'])->group(function () {
+Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::get('/main', [UserController::class,'indexMain'])->name('user.private');
 
 });
@@ -49,9 +49,18 @@ Route::prefix('user')->middleware(['auth', 'management'])->group(function () {
 
 
 
-Route::prefix('management')->middleware(['auth'])->group(function () {
-    Route::get('/', [AdminController::class, 'index']);
 
-    Route::get('/users', [AdminController::class, 'usersIndex'])->name('admin.users');
+Route::prefix('management')->middleware(['auth', 'management'])->group(function () {
+    Route::get('/', [ManagementController::class, 'index'])->name('admin.private');
+    Route::get('/users', [ManagementController::class, 'usersIndex'])->name('admin.users');
+    Route::get('/cars', [ManagementController::class, 'carsIndex'])->name('admin.cars');
+
+});
+
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+
+    Route::get('/add-new-car', [AdminController::class, 'addNewCarIndex'])->name('add.new.car');
+    Route::post('/add-new-car', [AdminController::class,'addNewCar'])->name('post.add.new.car');
     Route::get('/managers', [AdminController::class, 'managersIndex'])->name('admin.managers');
+
 });

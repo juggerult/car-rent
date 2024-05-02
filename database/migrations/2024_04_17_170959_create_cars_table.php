@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer('price');
             $table->boolean('isActive')->default(true);
             
-            $table->foreignId('tenant_id')->references('id')->on('users')->cascadeOnDelete()->nullable();
+            $table->foreignId('tenant_id')->references('id')->on('users')->cascadeOnDelete()->nullable()->default(null);
             $table->timestamps();
         });
     }

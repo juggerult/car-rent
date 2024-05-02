@@ -27,7 +27,6 @@
 }
 
 .vertical-header:hover {
-    transform: scale(1.04);
     box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.2);
 }
 
@@ -84,19 +83,19 @@
     <h1>PanelControl</h1>
     <nav>
         <ul>
-            <li><a href="#">Главная</a></li>
+            <li><a href="{{route('admin.private')}}">Главная</a></li>
             <li>
                 <a href="#" id="autopark-btn">Автопарк <span id="autopark-arrow-symbol" class="arrow-symbol">&#8595;</span></a>
                 <ul class="sub-menu" id="autopark-submenu">
-                    <li><a href="#" style="font-size: 16px; color: rgb(117, 111, 111);">Добавить авто</a></li>
-                    <li><a href="#" style="font-size: 16px; color: rgb(117, 111, 111);">Обзор</a></li>
+                    <li><a href="{{route('add.new.car')}}" style="font-size: 16px; color: rgb(117, 111, 111);">Добавить авто</a></li>
+                    <li><a href="{{route('admin.cars')}}" style="font-size: 16px; color: rgb(117, 111, 111);">Обзор</a></li>
                 </ul>   
             </li>
             <li>
                 <a href="#" id="users-btn">Пользователи <span id="users-arrow-symbol" class="arrow-symbol">&#8595;</span></a>
                 <ul class="sub-menu" id="users-submenu">
-                    <li><a href="#" style="font-size: 16px; color: rgb(117, 111, 111);">Клиенты</a></li>
-                    <li><a href="#" style="font-size: 16px; color: rgb(117, 111, 111);">Менеджеры</a></li>
+                    <li><a href="{{route('admin.users')}}" style="font-size: 16px; color: rgb(117, 111, 111);">Клиенты</a></li>
+                    <li><a href="{{route('admin.managers')}}" style="font-size: 16px; color: rgb(117, 111, 111);">Менеджеры</a></li>
                 </ul>
             </li>
             <li><a href="{{route('logout')}}">Выход</a></li>

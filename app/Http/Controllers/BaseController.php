@@ -15,4 +15,5 @@ class BaseController extends Controller
         $this->serviceGET = $getService;
         $this->servicePOST = $postService;
     }
+    
 }

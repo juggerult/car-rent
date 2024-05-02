@@ -54,14 +54,17 @@
 
 .nav-links li a {
     color: #333333;
+    border: 1px solid white;
     text-decoration: none;
+    padding: 10px;
     font-size: 1.2rem;
     font-family: 'Montserrat', serif;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, border-color 1.2s ease;
 }
 
 .nav-links li a:hover {
     color: #ff6347;
+    border-color: black;
 }
 
 </style>

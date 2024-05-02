@@ -2,6 +2,7 @@
 
 namespace App\Services\Get;
 
+use App\Models\Car;
 use App\Models\User;
 
 class Service{
@@ -13,5 +14,9 @@ class Service{
 
      public function getAllManagers(){
           return User::where('status', 'Менеджер')->get();
+     }
+
+     public function getAllCars(){
+          return Car::all();
      }
 }
