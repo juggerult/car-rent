@@ -17,10 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('main');
-
+Route::get("/", [UserController::class,"main"])->name("main");
 Route::fallback(function () {
     return view('fallback');
 })->name('fallback');

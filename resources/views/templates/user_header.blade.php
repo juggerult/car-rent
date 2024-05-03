@@ -15,18 +15,15 @@
     height: 50px;
     box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.1);
     transition: background-color 0.7s ease, transform 0.7s ease;
-    width: 70%;
+    width: 98%;
     margin-left: auto;
     margin-right: auto;
-    border-radius: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
 }
 
 .header:hover {
-    transform: scale(1.04);
     box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.2);
 }
 
@@ -63,7 +60,6 @@
 }
 
 .nav-links li a:hover {
-    color: #ff6347;
     border-color: black;
 }
 
