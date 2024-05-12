@@ -76,7 +76,7 @@
             display: inline-flex;
         }
         .infoDiv {
-            width: 400px;
+            width: 450px;
             margin-left: 410px;
             margin-top: 100px;
             margin-bottom: 100px;
@@ -96,6 +96,7 @@
 </head>
 <body>
     <div class="infoDiv">
+        <img src="https://png.pngtree.com/png-vector/20220711/ourmid/pngtree-automotive-car-logo-png-image_5837187.png" alt="Лицо" style="width: 50px; height: 50px; margin-right: 20px; vertical-align: middle; border-radius: 50%;">
         <span style="font-size: 20px;">Добавления нового авто в автопарк</span>
     </div>
     <form action="{{route('post.add.new.car')}}" method="POST" enctype="multipart/form-data">
@@ -120,6 +121,7 @@
                     <option value="Toyota">Toyota</option>
                     <option value="Ford">Ford</option>
                     <option value="Chevrolet">Chevrolet</option>
+                    <option value="Mercedes">Mercedes</option>
                     <option value="Honda">Honda</option>
                     <option value="Volkswagen">Volkswagen</option>
                     <option value="Nissan">Nissan</option>

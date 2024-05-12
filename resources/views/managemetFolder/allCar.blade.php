@@ -12,18 +12,19 @@
             font-family: 'Roboto', sans-serif;
         }
 
-        #example_wrapper {
-            width: 900px;
-            margin: 20px auto;
+        #example{
+            width: 500px;
+            margin-left: 450px;
         }
 
         #example th,
         #example td {
+            word-wrap: break-word;
             font-size: 14px;
-            text-align: center;
+            width: 1200px;
         }
 
-        .action-column {
+        .action-column {    
             width: 100px;
         }
 
@@ -36,31 +37,8 @@
             border-radius: 3px;
         }
 
-        .edit-button {
-            background-color: #ffffff;
-            border: 1px solid rgb(139, 139, 139);
-            color: rgb(0, 0, 0);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            border-radius: 3px;
-        }
-
-        .edit-button:hover {
-            background-color: #f0f0f0;
-            border-color: #000000;
-        }
-
-        .restore-button {
-            background-color: #ffffff;
-            border: 1px solid rgb(139, 139, 139);
-            color: rgb(0, 0, 0);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            border-radius: 3px;
-        }
-
-        .restore-button:hover {
-            background-color: #f0f0f0;
-            border-color: #000000;
-        }
+        .edit-button,
+        .restore-button,
         .delete-button {
             background-color: #ffffff;
             border: 1px solid rgb(139, 139, 139);
@@ -69,10 +47,13 @@
             border-radius: 3px;
         }
 
-        .delete-button:hover{
+        .edit-button:hover,
+        .restore-button:hover,
+        .delete-button:hover {
             background-color: #f0f0f0;
             border-color: #000000;
         }
+
         .infoDiv {
             width: 400px;
             margin: 100px auto;
@@ -88,11 +69,19 @@
             transform: scale(1.07);
             box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.2);
         }
-        img{
-          height: 100px;
-          width: 120px;
+
+        img {
+            height: 100px;
+            margin: 0;
+            width: 120px;
         }
 
+        #example td:nth-child(2) {
+            max-width: 200px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+        }
     </style>
 </head>
 <body>
@@ -101,8 +90,6 @@
         <span style="font-size: 20px;">Всего авто: {{ count($cars) }}</span>
     </div>
     
-    
-
     <table id="example" class="ui celled table" style="box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);">
         <thead>
             <tr>
@@ -116,7 +103,6 @@
                 <th>Цвет</th>
                 <th>Цена</th>
                 <th>Статус</th>
-                <th>Арендатель</th>
                 <th class="action-column">Действия</th>
             </tr>
         </thead>
@@ -124,16 +110,15 @@
             @foreach ($cars as $car)
             <tr>
                 <td><img src="/{{$car->logo->path}}"></td>
-                <td>{{ $car ['description'] }}</td>
-                <td>{{ $car ['type'] }}</td>
-                <td>{{ $car ['mark'] }}</td>
-                <td>{{ $car ['year'] }}</td>
-                <td>{{ $car ['gearbox'] }}</td>
-                <td>{{ $car ['engine'] }}</td>
-                <td>{{ $car ['color'] }}</td>
-                <td>{{ $car ['price'] }}</td>
-                <td>{{ $car ['isActive'] ? 'Активен' : 'Снят' }}</td>
-                <td>{{ optional($car->user)->phone_number }}</td>
+                <td>{{ $car['description'] }}</td>
+                <td>{{ $car['type'] }}</td>
+                <td>{{ $car['mark'] }}</td>
+                <td>{{ $car['year'] }}</td>
+                <td>{{ $car['gearbox'] }}</td>
+                <td>{{ $car['engine'] }}</td>
+                <td>{{ $car['color'] }}</td>
+                <td>{{ $car['price'] }}</td>
+                <td>{{ $car['isActive'] ? 'Активен' : 'Снят' }}</td>
                 <td class="action-column">
                     @if ($car['isActive'])
                         <button class="edit-button">Редактировать</button>
@@ -146,7 +131,6 @@
             @endforeach
         </tbody>
     </table>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.5/js/dataTables.semanticui.js"></script>

@@ -134,17 +134,12 @@
             @endforeach
         </tbody>
     </table>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
     <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.5/js/dataTables.semanticui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
     <script>
-        new DataTable('#example', {
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Russian.json'
-            }
-        });
+        new DataTable('#example');
     </script>
 </body>
 </html>
