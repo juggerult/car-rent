@@ -25,9 +25,10 @@
         .sidebar {
             width: 300px;
             padding: 20px;
+            border: 1px solid rgb(0, 0, 0);
+            border-radius: 10px;
             position: sticky;
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
             margin-right: 20px;
         }
 
@@ -63,12 +64,12 @@
             margin-left: 40px;
             height: 500px;
             background-color: #fff;
+            border: 1px solid rgb(146, 146, 146);
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
             overflow: hidden;
             transition: transform 0.6s ease;
             opacity: 0;
-            animation: fadeIn 3.5s ease forwards;
+            animation: fadeIn 4.5s ease forwards;
         }
 
         .car-info:first-child {
@@ -76,7 +77,7 @@
         }
 
         .car-info:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .car-image {
@@ -99,7 +100,7 @@
         }
 
         .car-details p {
-            margin: 5px 0;
+            margin: 7px 0;
             font-size: 14px;
             font-family: Montserrat, serif;
             color: #666;
@@ -115,14 +116,15 @@
             padding: 10px;
             background-color: #ffffff;
             border: 1px solid rgb(139, 139, 139);
+            font-size: 14px;
             color: rgb(0, 0, 0);
             cursor: pointer;
             transition: background-color 0.3s ease, border-color 0.3s ease;
             border-radius: 3px;
         }
 
+
         .car-details button:hover {
-            background-color: #f8f6f6;
             border-color: #000000;
         }
 
@@ -232,15 +234,22 @@
                 <img src="https://i.pinimg.com/736x/60/6e/36/606e36ab077df99dd0f681ed074ebe05.jpg" alt="Вторая картинка" class="car-image">
             @endif
 
-            <div class="car-details">
-                <h2><strong>Цена за сутки:</strong> <span class="price">{{$car['price']}}</span></h2>
-                <p><strong>Марка:</strong> {{$car['mark']}}</p>
-                <p><strong>Год выпуска:</strong> {{$car['year']}}</p>
-                <p><strong>Трансмиссия:</strong> {{$car['gearbox']}}</p>
-                <p><strong>Двигатель:</strong> {{$car['engine']}}</p>
-                <p><strong>Тип авто:</strong> {{$car['type']}}</p>
-                <button style="margin-top: 10px;">Забронировать</button>
-            </div>
+            <form action="/rent/car/{{$car['id']}}" method="GET">
+                <div class="car-details">
+                    <h2><strong>Цена за сутки:</strong> <span class="price">{{$car['price']}}</span></h2>
+                    <p><strong>Марка:</strong> {{$car['mark']}}</p>
+                    <p><strong>Год выпуска:</strong> {{$car['year']}}</p>
+                    <p><strong>Трансмиссия:</strong> {{$car['gearbox']}}</p>
+                    <p><strong>Двигатель:</strong> {{$car['engine']}}</p>
+                    <p><strong>Тип авто:</strong> {{$car['type']}}</p>
+                    @if(!$car['tenant_id'])
+                        <button style="margin-top: 10px;" type="submit">Забронировать</button>
+                    @else
+                        <button style="margin-top: 10px; border-color:white; font-size:17px;" disabled>В аренде</button>
+                    @endif
+                </div>
+            </form>
+            
         </div>
         @endforeach
     </div>

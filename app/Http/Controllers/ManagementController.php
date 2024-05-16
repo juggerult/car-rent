@@ -19,7 +19,7 @@ class ManagementController extends BaseController
 
     public function carsIndex(){
 
-        $cars = $this->serviceGET->getAllCars();
+        $cars = $this->serviceGET->getAllCars(2);
 
         return view('templates.admin_header') .view('managemetFolder.allCar', compact('cars'));
     }

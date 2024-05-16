@@ -40,6 +40,7 @@ Route::group([], function () { //Аунтефикация
 Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::get('/main', [UserController::class,'indexMain'])->name('user.private');
 
+    Route::get("/rent/car/{id}", [UserController::class, 'carPrivate'])->name('car.private');
 });
 
 

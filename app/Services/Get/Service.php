@@ -16,7 +16,19 @@ class Service{
           return User::where('status', 'Менеджер')->get();
      }
 
-     public function getAllCars(){
-          return Car::all();
+     public function getAllCars($isActive){
+          switch($isActive){
+               case "0":
+                    return Car::where('isActive', false)->get();
+               case "1":
+                    return Car::where('isActive', true)->get();
+               case "2":
+                    return Car::all();
+          }
      }
+
+     public function getCarById($id) {
+          return Car::where('id', $id)->first();
+     }
+      
 }

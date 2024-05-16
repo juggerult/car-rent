@@ -14,7 +14,7 @@
     padding: 20px;
     height: 50px;
     box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.7s ease, transform 0.7s ease;
+    transition: background-color 0.7s ease, transform 0.7s ease, box-shadow 0.7s ease;
     width: 98%;
     margin-left: auto;
     margin-right: auto;
@@ -26,6 +26,7 @@
 .header:hover {
     box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.2);
 }
+
 
 .navbar {
     display: flex;
@@ -76,6 +77,7 @@
                 <li><a href="#">О нас</a></li>
                 @if(Auth::check())
                     <li><a href="#">{{Auth::user()->first_name}}</a></li>
+                    <li><a>Баланс: {{Auth::user()->balance}}</a></li>
                 @else
                     <li><a href="{{route('user.private')}}">Личный кабинет</a></li>
                 @endif
