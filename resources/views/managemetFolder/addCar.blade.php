@@ -104,7 +104,7 @@
         <div class="container">
             <div class="right-container">
                 <label for="description">Описание:</label><br>
-                <textarea id="description" name="description" required></textarea><br><br>
+                <textarea id="description" name="description" maxlength="255" required></textarea><br><br>
                 <label for="type">Тип авто:</label><br>
                 <select id="type" name="type">
                     <option value="Седан">Седан</option>

@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <title>CarRent</title>
+    <link rel="icon" type="image/png" href="https://clipartcraft.com/images/car-logo-transparent-background-4.png">
     <style>
 .header {
     background-color: #ffffff;

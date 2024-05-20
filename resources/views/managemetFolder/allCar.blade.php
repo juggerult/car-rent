@@ -109,7 +109,13 @@
         <tbody>
             @foreach ($cars as $car)
             <tr>
-                <td><img src="/{{$car->logo->path}}"></td>
+                <td>
+                    @if(!empty($car->logo->path))
+                        <img src="/{{$car->logo->path}}">
+                    @else
+                        <img src="https://i.pinimg.com/736x/60/6e/36/606e36ab077df99dd0f681ed074ebe05.jpg" alt="Вторая картинка" class="car-image">
+                    @endif
+                </td>                              
                 <td>{{ $car['description'] }}</td>
                 <td>{{ $car['type'] }}</td>
                 <td>{{ $car['mark'] }}</td>

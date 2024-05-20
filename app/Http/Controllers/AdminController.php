@@ -34,7 +34,7 @@ class AdminController extends BaseController
     }
     private function getCarImages($request){
         $images = $request->validate([
-            'logo' => 'nullable',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'images' => 'required|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);

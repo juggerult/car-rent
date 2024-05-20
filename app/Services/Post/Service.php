@@ -25,18 +25,18 @@ class Service{
      }
      public function addImagesCar($images, $carId){
           if (is_array($images)) {
-              if($images['logo'] != null){
-                  $newLogoName = uniqid() . '.' .$images['logo']->extension();
-                  $images['logo']->move(public_path('images'), $newLogoName);
-                  LogoCar::create(['path' => 'images/' . $newLogoName, 'car_id' => $carId]);
-              }
-      
-              foreach($images['images'] as $image){
-                  $newImagesName = uniqid() .'.' .$image->extension();
-                  $image->move(public_path('images'), $newImagesName);
-                  CarImage::create(['path' => 'images/' . $newImagesName, 'car_id' => $carId]);
-              }
-          }
+               if (isset($images['logo']) && $images['logo']) {
+                   $newLogoName = uniqid() . '.' . $images['logo']->extension();
+                   $images['logo']->move(public_path('images'), $newLogoName);
+                   LogoCar::create(['path' => 'images/' . $newLogoName, 'car_id' => $carId]);
+               }
+       
+               foreach ($images['images'] as $image) {
+                   $newImagesName = uniqid() . '.' . $image->extension();
+                   $image->move(public_path('images'), $newImagesName);
+                   CarImage::create(['path' => 'images/' . $newImagesName, 'car_id' => $carId]);
+               }
+           }
       }
       
      

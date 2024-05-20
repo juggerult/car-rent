@@ -234,7 +234,7 @@
                 <img src="https://i.pinimg.com/736x/60/6e/36/606e36ab077df99dd0f681ed074ebe05.jpg" alt="Вторая картинка" class="car-image">
             @endif
 
-            <form action="/rent/car/{{$car['id']}}" method="GET">
+            <form action="/user/rent/car/{{$car['id']}}" method="GET">
                 <div class="car-details">
                     <h2><strong>Цена за сутки:</strong> <span class="price">{{$car['price']}}</span></h2>
                     <p><strong>Марка:</strong> {{$car['mark']}}</p>
