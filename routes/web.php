@@ -41,6 +41,8 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::get('/main', [UserController::class,'indexMain'])->name('user.private');
 
     Route::get("/rent/car/{id}", [UserController::class, 'carPrivate'])->name('car.private');
+
+    Route::post('/ger/rent/car/{id}', [UserController::class, 'getRentCar'])->name('get.rent');
 });
 
 
