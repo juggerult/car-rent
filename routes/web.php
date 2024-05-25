@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get("/", [UserController::class,"main"])->name("main");
+Route::get('/about', [UserController::class, 'aboutIndex'])->name('about');
 Route::fallback(function () {
     return view('fallback');
 })->name('fallback');
@@ -37,27 +38,24 @@ Route::group([], function () { //Аунтефикация
 
 
 
-Route::prefix('user')->middleware(['auth'])->group(function () {
+Route::prefix('user')->middleware(['auth', 'valid.rent.session'])->group(function () {
     Route::get('/main', [UserController::class,'indexMain'])->name('user.private');
 
     Route::get("/rent/car/{id}", [UserController::class, 'carPrivate'])->name('car.private');
 
     Route::post('/ger/rent/car/{id}', [UserController::class, 'getRentCar'])->name('get.rent');
+    Route::post('/cancel/rent/{id}', [UserController::class, 'cancelRent'])->name('cancel.rent');
 });
 
 
-
-
-
-
-Route::prefix('management')->middleware(['auth', 'management'])->group(function () {
+Route::prefix('management')->middleware(['auth', 'management', 'valid.rent.session'])->group(function () {
     Route::get('/', [ManagementController::class, 'index'])->name('admin.private');
     Route::get('/users', [ManagementController::class, 'usersIndex'])->name('admin.users');
     Route::get('/cars', [ManagementController::class, 'carsIndex'])->name('admin.cars');
 
 });
 
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin', 'valid.rent.session'])->group(function () {
 
     Route::get('/add-new-car', [AdminController::class, 'addNewCarIndex'])->name('add.new.car');
     Route::post('/add-new-car', [AdminController::class,'addNewCar'])->name('post.add.new.car');

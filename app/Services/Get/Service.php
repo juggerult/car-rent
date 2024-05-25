@@ -3,6 +3,7 @@
 namespace App\Services\Get;
 
 use App\Models\Car;
+use App\Models\RentSession;
 use App\Models\User;
 
 class Service{
@@ -30,5 +31,13 @@ class Service{
      public function getCarById($id) {
           return Car::where('id', $id)->first();
      }
-      
+
+     public function getAllRents(){
+          return RentSession::all();
+     }
+
+     public function getOneRent($id){
+          return RentSession::where('tenant_id',$id)->get();
+     }
+     
 }

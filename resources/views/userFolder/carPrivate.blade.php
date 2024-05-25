@@ -243,7 +243,8 @@
             </ul>
         </div>
         <div class="right-column">
-            <form class="form" action="" method="POST" oninput="calculateRentalAmount()">
+            <form class="form" action="{{ route('get.rent', ['id' => $car->id]) }}" method="POST" oninput="calculateRentalAmount()">
+                @csrf
                 <h2>Форма аренды</h2>
                 <div class="form-group">
                     <label for="start_date">Дата начала аренды:</label>
@@ -255,7 +256,7 @@
                 </div>
                 <div class="form-group">
                     <label for="rentalAmount">Сумма за аренду:</label>
-                    <output id="rentalAmountOutput">0 грн</output> <output>+ {{ $car['price'] * 7 }} залог</output>
+                    <output id="rentalAmountOutput">0 грн</output> <output>с учетом {{ $car['price'] * 7 }} залога</output>
                 </div>
                 <div class="form-group payment-method">
                     <label>Способ оплаты:</label>
@@ -264,13 +265,23 @@
                         <input type="radio" id="cash" name="payment_method" value="cash" required>
                     </div>
                     <div>
-                        <label for="card" style="text-align: center;">Картой</label>
+                        <label for="card" style="text-align: center;">Балансом аккаунта - скидка 10%</label>
                         <input type="radio" id="card" name="payment_method" value="card" required>
                     </div>
+                    <input type="hidden" id="price" name="price">
                 </div>
                 <div class="form-group">
-                    <button type="submit">Забронировать</button>
-                </div>
+                    @if ($car['tenant_id'])
+                        <h2>Авто в аренде</h2>
+                    @else
+                        <button type="submit">Забронировать</button>
+                    @endif
+                    <div class="alert-danger" style="color: red;">
+                        @foreach ($errors->all() as $error)
+                            {{ $error }}<br>
+                    @endforeach
+                    </div>
+                </div>                
             </form>
         </div>
     </div>
@@ -304,8 +315,10 @@
             const returnDate = new Date(document.getElementById('end_date').value);
             const rentalDays = (returnDate - pickupDate) / (1000 * 60 * 60 * 24);
             const carPrice = {{$car['price']}};
-            const rentalAmount = rentalDays * carPrice;
+            const deposit = carPrice * 7;
+            const rentalAmount = rentalDays * carPrice + deposit;
             document.getElementById('rentalAmountOutput').textContent = rentalAmount.toFixed(2);
+            document.getElementById('price').value = rentalAmount.toFixed(2);
         }
 
         const today = new Date().toISOString().split('T')[0];
