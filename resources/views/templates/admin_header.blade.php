@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
 <title>Management-panel</title>
+<link rel="icon" type="image/png" href="https://clipartcraft.com/images/car-logo-transparent-background-4.png">
 <style scoped>
      body {
      margin: 0;
@@ -87,7 +88,9 @@
             <li>
                 <a href="#" id="autopark-btn">Автопарк <span id="autopark-arrow-symbol" class="arrow-symbol">&#8595;</span></a>
                 <ul class="sub-menu" id="autopark-submenu">
+                    @if(Auth::user()->status == "Администратор")
                     <li><a href="{{route('add.new.car')}}" style="font-size: 16px; color: rgb(117, 111, 111);">Добавить авто</a></li>
+                    @endif
                     <li><a href="{{route('admin.cars')}}" style="font-size: 16px; color: rgb(117, 111, 111);">Обзор</a></li>
                 </ul>   
             </li>
@@ -95,9 +98,12 @@
                 <a href="#" id="users-btn">Пользователи <span id="users-arrow-symbol" class="arrow-symbol">&#8595;</span></a>
                 <ul class="sub-menu" id="users-submenu">
                     <li><a href="{{route('admin.users')}}" style="font-size: 16px; color: rgb(117, 111, 111);">Клиенты</a></li>
+                    @if(Auth::user()->status == "Администратор")
                     <li><a href="{{route('admin.managers')}}" style="font-size: 16px; color: rgb(117, 111, 111);">Менеджеры</a></li>
+                    @endif
                 </ul>
             </li>
+            <li><a href="">Аренда</a></li>
             <li><a href="{{route('logout')}}">Выход</a></li>
         </ul>
     </nav>

@@ -88,10 +88,10 @@
             </div>
             <ul class="nav-links">
                 <li><a href="{{route('main')}}">Главная</a></li>
-                <li><a href="#">О нас</a></li>
+                <li><a href="{{route('about')}}">О нас</a></li>
                 @if(Auth::check())
-                    <li><a href="#">{{Auth::user()->first_name}}</a></li>
-                    <li><a>Баланс: {{Auth::user()->balance}}</a></li>
+                    <li><a href="{{route('user.private')}}">{{Auth::user()->first_name}}</a></li>
+                    <li><a href="{{route('donate.index')}}">Баланс: {{Auth::user()->balance}}</a></li>
                     <li><a href="{{route('logout')}}">Выйти</a></li>
                 @else
                     <li><a href="{{route('user.private')}}">Личный кабинет</a></li>

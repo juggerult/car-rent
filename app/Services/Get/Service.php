@@ -37,7 +37,7 @@ class Service{
      }
 
      public function getOneRent($id){
-          return RentSession::where('tenant_id',$id)->get();
+          return RentSession::where('user_id',$id)->get();
      }
      
 }

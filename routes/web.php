@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DonateController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -41,10 +42,14 @@ Route::group([], function () { //Аунтефикация
 Route::prefix('user')->middleware(['auth', 'valid.rent.session'])->group(function () {
     Route::get('/main', [UserController::class,'indexMain'])->name('user.private');
 
-    Route::get("/rent/car/{id}", [UserController::class, 'carPrivate'])->name('car.private');
+    Route::put('/save/change/user', [UserController::class, 'saveChanges'])->name('save.changes');
 
+    Route::get("/rent/car/{id}", [UserController::class, 'carPrivate'])->name('car.private');
     Route::post('/ger/rent/car/{id}', [UserController::class, 'getRentCar'])->name('get.rent');
     Route::post('/cancel/rent/{id}', [UserController::class, 'cancelRent'])->name('cancel.rent');
+
+    Route::get('/donate', [DonateController::class, 'donateIndex'])->name('donate.index');
+    Route::post('/donate', [DonateController::class, 'donate'])->name('donate.post');
 });
 
 
@@ -53,10 +58,12 @@ Route::prefix('management')->middleware(['auth', 'management', 'valid.rent.sessi
     Route::get('/users', [ManagementController::class, 'usersIndex'])->name('admin.users');
     Route::get('/cars', [ManagementController::class, 'carsIndex'])->name('admin.cars');
 
+    Route::get('/rent-sessions', [ManagementController::class, 'rentSessionIndex'])->name('admin.sessions');
+    Route::post('/return-pledge/{id}', [ManagementController::class, 'returnPledge'])->name('return.pledge');
+
 });
 
 Route::prefix('admin')->middleware(['auth', 'admin', 'valid.rent.session'])->group(function () {
-
     Route::get('/add-new-car', [AdminController::class, 'addNewCarIndex'])->name('add.new.car');
     Route::post('/add-new-car', [AdminController::class,'addNewCar'])->name('post.add.new.car');
     Route::get('/managers', [AdminController::class, 'managersIndex'])->name('admin.managers');

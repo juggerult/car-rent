@@ -8,6 +8,7 @@ use App\Models\LogoCar;
 use App\Models\RentSession;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use PharIo\Manifest\Email;
 
 class Service{
 
@@ -51,11 +52,15 @@ class Service{
                'date_end' => $data['end_date'],
                'price' => $data['price'],
                'car_id' => $id,
-               'tenant_id' => Auth::user()->id,
+               'user_id' => Auth::user()->id,
                'payment_type' => $data['payment_method'],
                'isPledgeReturned' => $data['isPledgeReturned'],
                'isActive' => true,
           ]);
+
+          $car = Car::find($id);
+          $car->tenant_id = Auth::user()->id;
+          $car->save();
      }
 
      public function cancelRent($id)
@@ -68,5 +73,36 @@ class Service{
 
           $car->save();
           $rentSession->save();
+     }
+
+     public function updateUserInfo($data)
+     {
+          $user = User::find(Auth::user()->id);
+          $user->first_name = $data['first_name'];
+          $user->last_name = $data['last_name'];
+          $user->email = $data['email'];
+          $user->phone_number = $data['phone_number'];
+          $user->save();
+     }
+     public function returnPledge($id)
+     {
+          $rent = RentSession::find($id);
+          $rent->isPledgeReturned = true;
+
+          $user = User::find($rent->user_id);
+          $user->balance = $user->balance + $rent->car->price * 7;
+
+          $rent->save();
+          $user->save();
+     }
+     public function paidByCar($price)
+     {
+          $user = User::find(Auth::user()->id);
+          if($user->balance < $price) {
+               return false;
+          }
+
+          $user->balance = $user->balance - $price;
+          $user->save();
      }
 }

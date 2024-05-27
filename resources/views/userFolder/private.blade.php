@@ -164,16 +164,18 @@
     <div class="container">
         <div class="profile">
             <h2>Контактная информация</h2>
-            <form>
+            <form method="POST" action="{{route('save.changes')}}">
+                @csrf
+                @method('PUT')
                 <label for="name">Имя:</label>
-                <input type="text" id="first_name" value="{{Auth::user()->first_name}}">
+                <input type="text" id="first_name" value="{{Auth::user()->first_name}}" name="first_name">
                 <label for="name">Фамилия:</label>
-                <input type="text" id="last_name" value="{{Auth::user()->last_name}}">
+                <input type="text" id="last_name" value="{{Auth::user()->last_name}}" name="last_name">
                 <label for="email">Email:</label>
-                <input type="email" id="email" value="{{Auth::user()->email}}">
+                <input type="email" id="email" value="{{Auth::user()->email}}" name="email">
                 <label for="phone">Телефон:</label>
-                <input type="tel" id="phone" value="{{Auth::user()->phone_number}}">
-                <button type="button">Применить изменения</button>
+                <input type="tel" id="phone" value="{{Auth::user()->phone_number}}" name="phone_number">
+                <button type="sumbit">Применить изменения</button>
                 <div class="alert-danger" style="color: red;">
                     @foreach ($errors->all() as $error)
                         {{ $error }}<br>

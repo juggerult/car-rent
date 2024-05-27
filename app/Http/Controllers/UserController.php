@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,14 +44,17 @@ class UserController extends BaseController
 
           if($data['payment_method'] == 'card') {
                $data['price'] = $data['price'] * 0.9;
-               $this->paingByCard($data['price']);
+               
+               if(!$this->paingByCard($data['price'])) { 
+                    return redirect()->route('donate.index')->withErrors(['error' => 'У вас недостаточно средст на балансе']);
+               }
           }
 
           try{
                $this->servicePOST->startRentSession($data, $id);
 
                return redirect()->route('user.private');
-          }catch(\Exception $e){
+          }catch(Exception $e){
                return redirect()->back()->withErrors(['error' => "Ошибка аренды, попробуйте через несколько минут, $e"]);
           }
      }
@@ -60,18 +65,30 @@ class UserController extends BaseController
                'end_date' => 'required|date|after:start_date',
                'payment_method' => 'required',
                'price' => 'required',
-           ]);
+          ]);
           
           $data['isPledgeReturned'] = ($data['payment_method'] === 'cash') ? true : false;
           return $data;
      }
+     private function getFormUserData(Request $request)
+     {
+          $data = $request->validate([
+               'first_name' => 'required',
+               'last_name' => 'required',
+               'email' => 'required',
+               'phone_number' => 'required',
+          ]);
+
+          return $data;
+     }
      private function paingByCard($price) 
      {
-          if(Auth::user()->balance < $price) {
-               return redirect()->route('donate')->withErrors(['error' => 'У вас недостаточно средст на балансе']);
+          try{
+               $this->servicePOST->paidByCar($price);
+               return true;
+          }catch(Exception $e) { 
+               return false;
           }
-
-          Auth::user()->balance -= $price;
      }
 
      public function cancelRent($id)
@@ -79,5 +96,31 @@ class UserController extends BaseController
           $this->servicePOST->cancelRent($id);
 
           return back();
+     }
+     public function saveChanges(Request $request)
+     {
+          $data = $this->getFormUserData($request);
+          
+          if (!$this->checkAvailableData($data)) {
+               return redirect()->route('user.private')->withErrors(['error' => 'Пользователь с такой почтой или номером телефона уже зарегистрирован']);
+          }
+
+          try{
+               $this->servicePOST->updateUserInfo($data);
+          }catch(Exception $e) {
+               return redirect()->back()->withErrors(['error' => "Технические проблемы, попробуйте позже $e"]);
+          }
+
+          return redirect()->back()->withErrors(['error' => 'Изменения успешно сохранены']);
+     }
+     private function checkAvailableData($data)
+     {
+          if (User::where('email', $data['email'])->first()) {
+               return false;
+          } elseif (User::where('phone_number', $data['phone_number'])->first()) {
+               return false;
+          }
+   
+          return true;
      }
 }

@@ -14,7 +14,7 @@ class RentSession extends Model
         'date_end',
         'price',
         'car_id',
-        'tenant_id',
+        'user_id',
         'payment_type',
         'isPledgeReturned',
         'isActive',
