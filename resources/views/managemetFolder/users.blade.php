@@ -124,10 +124,21 @@
                 <td>{{ $user['isActive'] ? 'Активен' : 'Неактивен' }}</td>
                 <td class="action-column">
                     @if ($user['isActive'])
-                        <button class="edit-button">Редактировать</button>
-                        <button class="delete-button">Удалить</button>
+                        @if(Auth::user()->status == "Администратор")
+                        <form action="{{route('edit.user', ['id' => $user['id']])}}" method="GET">
+                            <button class="edit-button" type="submit">Редактировать</button>
+                        </form>
+                        @endif
+                        <form action="{{ route('delete.user', ['id' => $user['id']]) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="delete-button">Удалить</button>
+                        </form>                        
                     @else
+                    <form action="{{ route('return.user', ['id' => $user['id']]) }}" method="POST" style="display:inline;">
+                        @csrf
                         <button class="restore-button">Восстановить</button>
+                    </form>
                     @endif
                 </td>
             </tr>

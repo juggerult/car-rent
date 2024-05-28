@@ -124,10 +124,19 @@
                 <td>{{ $manager['isActive'] ? 'Активен' : 'Неактивен' }}</td>
                 <td class="action-column">
                     @if ($manager['isActive'])
-                        <button class="edit-button">Редактировать</button>
-                        <button class="delete-button">Удалить</button>
+                        <form action="{{route('edit.user', ['id' => $manager['id']])}}" method="GET">
+                            <button class="edit-button" type="submit">Редактировать</button>
+                        </form>
+                        <form action="{{ route('delete.user', ['id' => $manager['id']]) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="delete-button">Удалить</button>
+                        </form>                        
                     @else
+                    <form action="{{ route('return.user', ['id' => $manager['id']]) }}" method="POST" style="display:inline;">
+                        @csrf
                         <button class="restore-button">Восстановить</button>
+                    </form>
                     @endif
                 </td>
             </tr>

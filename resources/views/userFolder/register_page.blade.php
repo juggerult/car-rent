@@ -66,7 +66,7 @@
         });
         
         function validatePhoneNumber(phone) {
-            var phoneRegex = /^\+380\d{7}$/;
+            var phoneRegex = /^\+380\d{9}$/;
             return phoneRegex.test(phone);
         }
         </script>

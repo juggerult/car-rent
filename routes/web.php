@@ -61,6 +61,8 @@ Route::prefix('management')->middleware(['auth', 'management', 'valid.rent.sessi
     Route::get('/rent-sessions', [ManagementController::class, 'rentSessionIndex'])->name('admin.sessions');
     Route::post('/return-pledge/{id}', [ManagementController::class, 'returnPledge'])->name('return.pledge');
 
+    Route::delete('/delete/user/{id}', [ManagementController::class, 'deleteUser'])->name('delete.user');
+    Route::post('/update/user/{id}', [ManagementController::class, 'returnUser'])->name('return.user');
 });
 
 Route::prefix('admin')->middleware(['auth', 'admin', 'valid.rent.session'])->group(function () {
@@ -68,4 +70,9 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'valid.rent.session'])->gro
     Route::post('/add-new-car', [AdminController::class,'addNewCar'])->name('post.add.new.car');
     Route::get('/managers', [AdminController::class, 'managersIndex'])->name('admin.managers');
 
+    Route::get('/edit/user/{id}', [ManagementController::class, 'editUserIndex'])->name('edit.user');
+    Route::put('/edit/user/{id}', [ManagementController::class, 'saveEditUser'])->name('save.edit.user');
+
+    Route::delete('/delete/car/{id}', [AdminController::class, 'deleteCar'])->name('delete.car');
+    Route::post('/update/car/{id}', [AdminController::class, 'returnCar'])->name('return.car');
 });

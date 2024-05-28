@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use Illuminate\Http\Request;
 
 class AdminController extends BaseController
@@ -52,5 +53,21 @@ class AdminController extends BaseController
 
         return redirect()->to(route('add.new.car'));
 
+    }
+    public function deleteCar($id)
+    {
+        $car = Car::find($id);
+        $car->isActive = false;
+        $car->save();
+
+        return redirect()->back();
+    }
+    public function returnCar($id)
+    {
+        $car = Car::find($id);
+        $car->isActive = true;
+        $car->save();
+
+        return redirect()->back();
     }
 }

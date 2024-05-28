@@ -126,11 +126,20 @@
                 <td>{{ $car['price'] }}</td>
                 <td>{{ $car['isActive'] ? 'Активен' : 'Снят' }}</td>
                 <td class="action-column">
+                    @if(Auth::user()->status == "Администратор")
                     @if ($car['isActive'])
                         <button class="edit-button">Редактировать</button>
-                        <button class="delete-button">Удалить</button>
+                        <form action="{{ route('delete.car', ['id' => $car['id']]) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="delete-button">Удалить</button>
+                        </form>           
                     @else
+                    <form action="{{ route('return.car', ['id' => $car['id']]) }}" method="POST" style="display:inline;">
+                        @csrf
                         <button class="restore-button">Восстановить</button>
+                    </form>
+                    @endif
                     @endif
                 </td>
             </tr>

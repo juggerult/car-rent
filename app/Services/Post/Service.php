@@ -84,6 +84,18 @@ class Service{
           $user->phone_number = $data['phone_number'];
           $user->save();
      }
+     public function updateUserManagement($id, $data)
+     {
+          $user = User::find($id);
+          $user->first_name = $data['first_name'];
+          $user->last_name = $data['last_name'];
+          $user->phone_number = $data['phone_number'];
+          $user->email = $data['email'];
+          $user->balance = $data['balance'];
+          $user->password = bcrypt($data['password']);
+          $user->status = $data['status'];
+          $user->save();
+     }
      public function returnPledge($id)
      {
           $rent = RentSession::find($id);
