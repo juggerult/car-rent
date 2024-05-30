@@ -6,6 +6,7 @@ use App\Models\Car;
 use App\Models\CarImage;
 use App\Models\LogoCar;
 use App\Models\RentSession;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use PharIo\Manifest\Email;
@@ -92,7 +93,6 @@ class Service{
           $user->phone_number = $data['phone_number'];
           $user->email = $data['email'];
           $user->balance = $data['balance'];
-          $user->password = bcrypt($data['password']);
           $user->status = $data['status'];
           $user->save();
      }
@@ -116,5 +116,19 @@ class Service{
 
           $user->balance = $user->balance - $price;
           $user->save();
+     }
+     public function sendReview($data, $id)
+     {
+          Review::create([
+               'rating' => $data['rating'],
+               'text' => $data['text'],
+               'car_id' => $id,
+               'user_id' => Auth::user()->id
+          ]);
+     }
+     public function deleteReview($id)
+     {
+          $review = Review::find($id);
+          $review->delete();
      }
 }

@@ -4,6 +4,7 @@ namespace App\Services\Get;
 
 use App\Models\Car;
 use App\Models\RentSession;
+use App\Models\Review;
 use App\Models\User;
 
 class Service{
@@ -12,7 +13,10 @@ class Service{
      public function getAllUsers(){
           return User::where('status', 'Пользователь')->get();
      }
-
+     public function allUsers()
+     {
+          return User::all();
+     }
      public function getAllManagers(){
           return User::where('status', 'Менеджер')->get();
      }
@@ -26,6 +30,10 @@ class Service{
                case "2":
                     return Car::all();
           }
+     }
+     public function getAllReview()
+     {
+          return Review::all();
      }
 
      public function getCarById($id) {

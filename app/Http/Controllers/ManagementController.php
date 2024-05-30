@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RentSession;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -10,15 +11,21 @@ class ManagementController extends BaseController
 {
     public function index()
     {
-        $users = $this->serviceGET->getAllUsers();
+        $users = $this->serviceGET->allUsers();
         $cars = $this->serviceGET->getAllCars(2);
         $rents = $this->serviceGET->getAllRents();
-        return view('templates.admin_header').view('managemetFolder.main');
+        $monthIncome = RentSession::whereBetween('date_start', [now()->startOfMonth(), now()->endOfMonth()])
+                  ->sum('price');
+        $weekIncome = RentSession::whereBetween('date_start', [now()->startOfWeek(), now()->endOfWeek()])
+                  ->sum('price');
+        $dayIncome = RentSession::whereDate('date_start', now()->toDateString())
+                  ->sum('price');
+  
+        return view('templates.admin_header').view('managemetFolder.main', compact('users', 'cars', 'rents', 'monthIncome', 'weekIncome', 'dayIncome'));
     }
 
     public function usersIndex()
     {
-
         $users = $this->serviceGET->getAllUsers();
 
         return view('templates.admin_header').view('managemetFolder.users', compact('users'));
@@ -59,7 +66,6 @@ class ManagementController extends BaseController
             'email' => 'required|email',
             'balance' => 'required',
             'status' => 'required',
-            'password' => 'required',
         ]);
     }
     public function saveEditUser(Request $request, $id)
@@ -102,5 +108,21 @@ class ManagementController extends BaseController
         $user->save();
 
         return redirect()->back();
+    }
+    public function reviewsIndex()
+    {
+        $reviews = $this->serviceGET->getAllReview();
+
+        return view('templates.admin_header') .view('managemetFolder.reviews', compact('reviews'));
+    }
+    public function deleteReview($id)
+    {
+        try{
+            $this->servicePOST->deleteReview($id);
+
+            return redirect()->back();
+        }catch(Exception $e) {
+            return redirect()->back();
+        }
     }
 }

@@ -34,4 +34,8 @@ class Car extends Model
     public function rentSession(){
         return $this->hasOne(RentSession::class);
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

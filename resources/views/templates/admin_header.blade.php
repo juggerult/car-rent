@@ -104,6 +104,7 @@
                 </ul>
             </li>
             <li><a href="{{route('admin.sessions')}}">Аренда</a></li>
+            <li><a href="{{route('reviews.index')}}">Отзывы</a></li>
             <li><a href="{{route('admin.sessions')}}">Финансовая статистика</a></li>
             <li><a href="{{route('logout')}}">Выход</a></li>
         </ul>

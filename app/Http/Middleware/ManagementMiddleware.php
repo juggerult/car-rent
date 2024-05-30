@@ -17,7 +17,7 @@ class ManagementMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::user()->status == 'Пользователь'){
-            return redirect()->to(route('fallback'));
+            return redirect()->to('/fallback');
         }
         return $next($request);
     }

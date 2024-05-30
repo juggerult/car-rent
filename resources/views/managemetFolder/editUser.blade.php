@@ -141,11 +141,6 @@ button:hover {
                <label for="balance">Баланс</label>
                <input type="text" id="balance" name="balance" value="{{$user->balance}}">
            </div>
-             <div class="form-group">
-                 <label for="password">Пароль</label>
-                 <input type="password" id="password" name="password" value="{{$user->password}}">
-                 <div id="passwordError" style="color: red;"></div>
-             </div>
              <button type="submit">Сохранить</button>
          </form>
      </div>

@@ -123,4 +123,19 @@ class UserController extends BaseController
    
           return true;
      }
+     public function senReview(Request $request, $id)
+     {
+          $data = $request->validate([
+               'rating' => 'required',
+               'text' => 'required',
+          ]);
+
+          try{
+               $this->servicePOST->sendReview($data, $id);
+
+               return redirect()->back();
+          }catch(Exception $e) {
+               return redirect()->to(route('fallback'));
+          }
+     }
 }

@@ -60,15 +60,10 @@
      <div class="info">
           <h1>Что-то пошло не так</h1>
           <p>Возможно, запрашиваемая страница не была найдена, или у вас нет доступа к ней.</p><br>
-          <a onclick="goBack()">Вернуть в главное меню</a>
+          <a href="{{route('main')}}">Вернуть в главное меню</a>
      </div>
 
      
-<script>
-     function goBack() {
-          window.history.back();
-     }
-</script>
 
 
 </body>

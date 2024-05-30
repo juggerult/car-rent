@@ -20,6 +20,7 @@
         .left-column {
             flex: 0 0 900px;
             padding: 20px;
+            height: 100%;
             margin-top: 17px;
             margin-left: 100px;
             text-align: center;
@@ -218,6 +219,109 @@
     border: 1px solid #000; /* Черная обводка для контраста */
     vertical-align: middle; /* Выравнивание по вертикали */
 }
+.review-form {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+            width: 355px;
+            transition: box-shadow 0.35s ease, transform 0.8s ease, background-color 0.5s ease;
+            margin: 30px auto 0;
+        }
+        .review-form:hover {
+            box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.2);
+            transform: scale(1.02);
+        }
+        .review-form h2 {
+            margin-top: 0;
+            margin-bottom: 30px;
+            text-align: center;
+            font-family: Montserrat, serif;
+            color: #333333;
+        }
+        .review-form .form-group {
+            margin-bottom: 25px;
+        }
+        .review-form .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            text-align: left;
+            font-family: Montserrat, serif;
+            color: #666666;
+        }
+        .review-form .form-group input, .review-form .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+            color: #555555;
+            box-sizing: border-box;
+        }
+        .review-form .form-group input:focus, .review-form .form-group textarea:focus {
+            border-color: #4CAF50;
+        }
+        .review-form .form-group textarea {
+            resize: vertical;
+        }
+        .review-form .form-group input[type="submit"]:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        .rating {
+            display: flex;
+            justify-content: space-between;
+            margin: 0 -5px;
+        }
+        .rating input[type="radio"] {
+            display: none;
+        }
+        .rating label {
+            font-size: 1.5em;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .rating input[type="radio"]:checked ~ label,
+        .rating label:hover,
+        .rating label:hover ~ label {
+            color: #ffa500;
+        }
+        reviews {
+            background-color: #f9f9f9;
+            padding: 30px;
+            font-family: Montserrat, serif;
+            border-radius: 20px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            width: 90%;
+            margin: 30px auto 0;
+        }
+        .review {
+            font-family: Montserrat, serif;
+            border-bottom: 1px solid #cccccc;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .review:last-child {
+            border-bottom: none;
+        }
+        .review-header {
+            display: flex;
+            font-family: Montserrat, serif;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .review-rating {
+            color: #ffa500;
+            font-family: Montserrat, serif;
+            font-size: 1.2em;
+        }
+        .review-text {
+            font-family: Montserrat, serif;
+            color: #555555;
+        }
 
     </style>
 </head>
@@ -241,6 +345,31 @@
                 <li>Тип: {{ $car['type'] }}</li>
                 <li>Цвет: <span class="color-circle" style="background-color: {{ $car['color'] }}"></span></li>
             </ul>
+
+            <div class="reviews">
+                <h2>Отзывы</h2>
+                @foreach ($car->reviews as $review)
+                <div class="review">
+                    {{$review->user->first_name}}
+                    <div class="review-header">
+                        <div class="review-rating">
+                            @for ($i = 0; $i < $review->rating; $i++)
+                                &#9733;
+                            @endfor
+                            @for ($i = $review->rating; $i < 5; $i++)
+                                &#9734;
+                            @endfor
+                        </div>
+                        <div class="review-date">
+                            {{ $review->created_at->format('d.m.Y') }}
+                        </div>
+                    </div>
+                    <div class="review-text">
+                        {{ $review->text }}
+                    </div>
+                </div>
+                @endforeach
+            </div>
         </div>
         <div class="right-column">
             <form class="form" action="{{ route('get.rent', ['id' => $car->id]) }}" method="POST" oninput="calculateRentalAmount()">
@@ -282,6 +411,33 @@
                     @endforeach
                     </div>
                 </div>                
+            </form>
+
+            <form class="review-form" action="{{ route('post.review', ['id' => $car->id]) }}" method="POST">
+                @csrf
+                <h2>Оставьте отзыв</h2>
+                <div class="form-group">
+                    <label for="rating">Оценка:</label>
+                    <div class="rating">
+                        <input type="radio" id="star1" name="rating" value="1" required>
+                        <label for="star1">&#9733;</label>
+                        <input type="radio" id="star2" name="rating" value="2">
+                        <label for="star2">&#9733;</label>
+                        <input type="radio" id="star3" name="rating" value="3">
+                        <label for="star3">&#9733;</label>
+                        <input type="radio" id="star4" name="rating" value="4">
+                        <label for="star4">&#9733;</label>
+                        <input type="radio" id="star5" name="rating" value="5">
+                        <label for="star5">&#9733;</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="review">Отзыв:</label>
+                    <textarea id="review" name="text" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <button>Отправить</button>
+                </div>
             </form>
         </div>
     </div>

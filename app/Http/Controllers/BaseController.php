@@ -11,7 +11,8 @@ class BaseController extends Controller
     public $serviceGET;
     public $servicePOST;
 
-    public function __construct(GetService $getService, PostService $postService){
+    public function __construct(GetService $getService, PostService $postService)
+    {
         $this->serviceGET = $getService;
         $this->servicePOST = $postService;
     }

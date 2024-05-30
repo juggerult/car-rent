@@ -50,6 +50,8 @@ Route::prefix('user')->middleware(['auth', 'valid.rent.session'])->group(functio
 
     Route::get('/donate', [DonateController::class, 'donateIndex'])->name('donate.index');
     Route::post('/donate', [DonateController::class, 'donate'])->name('donate.post');
+
+    Route::post('/send/review{id}', [UserController::class, 'senReview'])->name('post.review');
 });
 
 
@@ -63,6 +65,9 @@ Route::prefix('management')->middleware(['auth', 'management', 'valid.rent.sessi
 
     Route::delete('/delete/user/{id}', [ManagementController::class, 'deleteUser'])->name('delete.user');
     Route::post('/update/user/{id}', [ManagementController::class, 'returnUser'])->name('return.user');
+
+    Route::get('/reviews', [ManagementController::class, 'reviewsIndex'])->name('reviews.index');
+    Route::delete('/delete/review/{id}', [ManagementController::class, 'deleteReview'])->name('delete.review');
 });
 
 Route::prefix('admin')->middleware(['auth', 'admin', 'valid.rent.session'])->group(function () {
