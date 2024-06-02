@@ -128,7 +128,9 @@
                 <td class="action-column">
                     @if(Auth::user()->status == "Администратор")
                     @if ($car['isActive'])
+                    <form action="{{ route('edit.car', ['id' => $car['id']]) }}" method="GET" style="display:inline;">
                         <button class="edit-button">Редактировать</button>
+                    </form>
                         <form action="{{ route('delete.car', ['id' => $car['id']]) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')

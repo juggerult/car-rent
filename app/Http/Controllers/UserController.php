@@ -84,8 +84,7 @@ class UserController extends BaseController
      private function paingByCard($price) 
      {
           try{
-               $this->servicePOST->paidByCar($price);
-               return true;
+               return $this->servicePOST->paidByCar($price);
           }catch(Exception $e) { 
                return false;
           }
@@ -115,9 +114,9 @@ class UserController extends BaseController
      }
      private function checkAvailableData($data)
      {
-          if (User::where('email', $data['email'])->first()) {
+          if (User::where('email', $data['email'])->first() && Auth::user()->email != $data['email']) {
                return false;
-          } elseif (User::where('phone_number', $data['phone_number'])->first()) {
+          } elseif (User::where('phone_number', $data['phone_number'])->first() && Auth::user()->phone_number != $data['phone_number']) {
                return false;
           }
    

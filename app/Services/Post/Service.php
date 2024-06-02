@@ -37,11 +37,13 @@ class Service{
                    $images['logo']->move(public_path('images'), $newLogoName);
                    LogoCar::create(['path' => 'images/' . $newLogoName, 'car_id' => $carId]);
                }
-       
+               
+               if(isset($images['images'])) {
                foreach ($images['images'] as $image) {
-                   $newImagesName = uniqid() . '.' . $image->extension();
-                   $image->move(public_path('images'), $newImagesName);
-                   CarImage::create(['path' => 'images/' . $newImagesName, 'car_id' => $carId]);
+                    $newImagesName = uniqid() . '.' . $image->extension();
+                    $image->move(public_path('images'), $newImagesName);
+                    CarImage::create(['path' => 'images/' . $newImagesName, 'car_id' => $carId]);
+                    }
                }
           }
      }
@@ -116,6 +118,7 @@ class Service{
 
           $user->balance = $user->balance - $price;
           $user->save();
+          return true;
      }
      public function sendReview($data, $id)
      {
@@ -130,5 +133,18 @@ class Service{
      {
           $review = Review::find($id);
           $review->delete();
+     }
+     public function updateCar($data, $id)
+     {
+          $car = Car::find($id);
+          $car->description = $data['description'];
+          $car->type = $data['type'];
+          $car->mark = $data['mark'];
+          $car->year = $data['year'];
+          $car->gearbox = $data['gearbox'];
+          $car->engine = $data['engine'];
+          $car->color = $data['color'];
+          $car->price = $data['price'];
+          $car->save();
      }
 }

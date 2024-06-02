@@ -41,9 +41,9 @@ class AuthController extends BaseController
     private function checkAvailable($data)
     {
         if (User::where('email', $data['email'])->first()) {
-            return redirect()->route('registration')->withErrors(['error' => 'Пользователь с такой почтой уже зарегистрирован']);
+            return false;
         } elseif (User::where('phone_number', $data['phone_number'])->first()) {
-            return redirect()->route('registration')->withErrors(['error' => 'Пользователь с таким номером телефона уже зарегистрирован']);
+            return false;;
         }
 
         return true;
@@ -62,9 +62,10 @@ class AuthController extends BaseController
             } catch (\Exception $e) {
                 return redirect()->route('registration')->withErrors(['error' => $e->getMessage()]);
             }
+        }else{
+            return redirect()->route('registration')->withErrors(['error' => 'Пользователь c таким номером или почтой уже зарегестрирован']);
         }
         
-        return redirect()->route('.registration')->withErrors(['error' => 'Что то пошло не так, попробуйте позже']);
     }
 
     public function login(Request $request)

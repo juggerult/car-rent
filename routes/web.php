@@ -79,5 +79,10 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'valid.rent.session'])->gro
     Route::put('/edit/user/{id}', [ManagementController::class, 'saveEditUser'])->name('save.edit.user');
 
     Route::delete('/delete/car/{id}', [AdminController::class, 'deleteCar'])->name('delete.car');
-    Route::post('/update/car/{id}', [AdminController::class, 'returnCar'])->name('return.car');
+    Route::post('/return/car/{id}', [AdminController::class, 'returnCar'])->name('return.car');
+    
+    Route::get('/update/car/{id}', [AdminController::class, 'editCarIndex'])->name('edit.car');
+    Route::post('/update/car/{id}', [AdminController::class, 'saveUpdateCar'])->name('save.update.car');
+
+    Route::get('/finance', [AdminController::class, 'financeIndex'])->name('finance.index');
 });
