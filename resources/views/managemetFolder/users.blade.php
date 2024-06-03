@@ -94,7 +94,8 @@
 <body>
     <div class="infoDiv">
         <img src="https://www.freeiconspng.com/thumbs/login-icon/user-login-icon-14.png" alt="Лицо" style="width: 50px; height: 50px; margin-right: 20px; vertical-align: middle; border-radius: 50%;">
-        <span style="font-size: 20px;">Всего клиентов: {{ count($users) }}</span>
+        <span style="font-size: 20px;">Всего клиентов: {{ count($users) }}</span><br>
+        <a href="{{route('add.user.index')}}"><button class="restore-button" style="height: 40px;">Додати користувача</button></a>
     </div>
     
     

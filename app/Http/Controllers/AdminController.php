@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use App\Models\RentSession;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -119,5 +120,48 @@ class AdminController extends BaseController
 
         return view('templates.admin_header')
             .view('managemetFolder.finance', compact('monthIncome', 'weekIncome', 'dayIncome', 'dailyIncomes', 'monthlyIncomes', 'popularCars'));
+    }
+
+    public function addUserIndex()
+    {
+        return view('templates.admin_header') .view('managemetFolder.addUser');
+    }
+    public function addNewUser(Request $request)
+    {
+        $data = $this->getUserForm($request);
+
+        $checkResult = $this->checkAvailable($data);
+
+        if ($checkResult === true) {
+            try {
+                $this->servicePOST->registrationUserByAdmin($data);    
+                return redirect()->route('add.user.index')->withErrors(['error' => 'Пользователь успешно зарегистрирован']);
+            } catch (\Exception $e) {
+                return redirect()->route('add.user.index')->withErrors(['error' => $e->getMessage()]);
+            }
+        }else{
+            return redirect()->route('add.user.index')->withErrors(['error' => 'Пользователь c таким номером или почтой уже зарегестрирован']);
+        }
+    }
+    private function checkAvailable($data)
+    {
+        if (User::where('email', $data['email'])->first()) {
+            return false;
+        } elseif (User::where('phone_number', $data['phone_number'])->first()) {
+            return false;;
+        }
+
+        return true;
+    }
+ private function getUserForm(Request $request)
+    {
+        return $request->validate([
+            'first_name' => 'required',
+            'last_name'=> 'required',
+            'phone_number' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'status' => 'required',
+        ]);
     }
 }

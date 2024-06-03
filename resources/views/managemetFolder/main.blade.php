@@ -127,14 +127,14 @@
                 <h2>Аренды</h2>
                 <p>Активных: {{ $rents->whereNotNull('tenant_id')->where('isActive', true)->count() }}</p>
                 <p>Завершенных: {{ $rents->where('isActive', false)->count() }}</p>
-                <a class="buttonCLs" {{route('admin.sessions')}}>Перейти к сесиям</a>
+                <a class="buttonCLs" href="{{route('admin.sessions')}}">Перейти к сесиям</a>
             </div><br>
             <div class="financeDiv">
                 <h2 style="font-size: 30px; font-family: Montserrat, serif; font-weight: 100; margin-bottom: 10px;">Финансы</h2>
                 <p>Прибыль за месяц: {{$monthIncome}}</p>
                 <p>Прибыль за неделю: {{$weekIncome}}</p>
                 <p>Прибыль за день: {{$dayIncome}}</p>
-                <a class="buttonCLs">Перейти к финансам</a>
+                <a class="buttonCLs" href="{{route('finance.index')}}">Перейти к финансам</a>
             </div>
         </div>
     </div>

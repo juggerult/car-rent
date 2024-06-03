@@ -6,6 +6,7 @@ use App\Http\Controllers\DonateController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Spatie\LaravelIgnition\FlareMiddleware\AddJobs;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,4 +86,7 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'valid.rent.session'])->gro
     Route::post('/update/car/{id}', [AdminController::class, 'saveUpdateCar'])->name('save.update.car');
 
     Route::get('/finance', [AdminController::class, 'financeIndex'])->name('finance.index');
+
+    Route::get('/add/user', [AdminController::class, 'addUserIndex'])->name('add.user.index');
+    Route::post('/add/user', [AdminController::class, 'addNewUser'])->name('add.user.post');
 });

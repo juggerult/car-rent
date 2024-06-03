@@ -147,4 +147,10 @@ class Service{
           $car->price = $data['price'];
           $car->save();
      }
+     public function registrationUserByAdmin($data)
+     {
+          $user = User::create($data);
+          $user->password = bcrypt($data["password"]);
+          $user->save();
+     }
 }
